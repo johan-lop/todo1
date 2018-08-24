@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="adminAplicacion">
+    <head>
+        <title>Hulk Store</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link href="./css/bootstrap.min.css" rel="stylesheet">
+        <link href="./css/main.css" rel="stylesheet">
+        <script src="./js/lib/jquery.min.js"></script>
+        <script src="./js/lib/bootstrap.min.js"></script>
+        <script src="./js/lib/utils.js"></script>
+    </head>
+    <body>
+        <div class="content">
+            <div class="content-header" >
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Desplegar navegaci�n</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#/"></a>
+                    </div>
+
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Parametrizar <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#/Producto">Producto</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="content-body">
+                <div ng-view></div>
+            </div>
+            <div class="content-footer"></div>
+        </div>
+        <script src="./js/lib/angular.min.js"></script>
+        <script src="./js/lib/angular-route.js"></script>
+        <script src="./js/AplicacionModulo.js"></script>
+        <script src="./js/ProductoController.js"></script>
+    </body>
+</html>
+

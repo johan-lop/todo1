@@ -1,23 +1,20 @@
-<div>
     <div class="row">
-        <div class="form-group col-lg-8 col-md-8">
+        <div class="form-group col-lg-6 col-md-6">
             <table class="resultados table table-striped">
                 <tr>
                     <th>Codigo</th>
-                    <th>Imagen</th>
                     <th>Descripcion</th>
                     <th>Disponibles</th>
                     <th></th>
                 </tr>
                 <tr ng-repeat="row in lista">
                     <td>{{row.id}}</td>
-                    <td>{{row.imagen}}</td>
                     <td>{{row.descripcion}}</td>
                     <td>{{row.stock}}</td>
                     <td>
-                        <button type="button" class="btn btn-info" title="Agregar al Carrito"
-                                ng-click="agregarProducto(row)">
-                            <i class="glyphicon glyphicon-shopping-cart"></i> 
+                        <button type="button" class="btn btn-info" title="Editar"
+                                ng-click="editarProducto(row)">
+                            <i class="glyphicon glyphicon-edit"></i> 
                         </button>
                     </td>
                 </tr>
@@ -25,27 +22,35 @@
 
 
         </div>
-        <div class="form-group col-lg-4 col-md-4">
-            <table class="resultados table table-striped" ng-show="carrito.length">
-                <tr>
-                    <th>Descripcion</th>
-                    <th>Cantidad</th>
-                    <th></th>
-                </tr>
-                <tr ng-repeat="row in carrito">
-                    <td>{{row.descripcion}}</td>
-                    <td>
-                        <input class="form-control" type="text"  />
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-info" title="Borrar"
-                                ng-click="borrar(row)">
-                            <i class="glyphicon glyphicon-trash"></i> 
-                        </button>
-                    </td>
-                </tr>
-            </table>
+        <div class="form-group col-lg-6 col-md-6">
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label>Descripción</label>
+                    <input class="form-control" type="text" ng-model="nuevoProducto.descripcion" /> 
+                </div>
+                <div class="form-group col-lg-6 col-md-6">
+                    <label>Cantidad</label>
+                    <input class="form-control" type="number" ng-model="nuevoProducto.stock" /> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12 col-md-12 text-center">
+                    <label>Imagen</label><br />
+                    <img src="{{nuevoProducto.imagen}}" width="100px" height="100px" /> <br />
+                    <input type="file" id="file" name="file" 
+                           onchange="angular.element(this).scope().readURL()" 
+                           accept=".jpg,.png,.jpeg"
+                           ng-required="true"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12 col-md-12 text-center">
+                    <button type="button" class="btn btn-success" title="Guardar"
+                            ng-click="guardar()">
+                        <i class="glyphicon glyphicon-floppy-save"></i> Guardar
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 

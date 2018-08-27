@@ -1,56 +1,70 @@
-    <div class="row">
-        <div class="form-group col-lg-6 col-md-6">
-            <table class="resultados table table-striped">
-                <tr>
-                    <th>Codigo</th>
-                    <th>Descripcion</th>
-                    <th>Disponibles</th>
-                    <th></th>
-                </tr>
-                <tr ng-repeat="row in lista">
-                    <td>{{row.id}}</td>
-                    <td>{{row.descripcion}}</td>
-                    <td>{{row.stock}}</td>
-                    <td>
-                        <button type="button" class="btn btn-info" title="Editar"
-                                ng-click="editarProducto(row)">
-                            <i class="glyphicon glyphicon-edit"></i> 
-                        </button>
-                    </td>
-                </tr>
-            </table>
-
-
-        </div>
-        <div class="form-group col-lg-6 col-md-6">
-            <div class="row">
-                <div class="form-group col-lg-6 col-md-6">
-                    <label>Descripción</label>
-                    <input class="form-control" type="text" ng-model="nuevoProducto.descripcion" /> 
-                </div>
-                <div class="form-group col-lg-6 col-md-6">
-                    <label>Cantidad</label>
-                    <input class="form-control" type="number" ng-model="nuevoProducto.stock" /> 
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-lg-12 col-md-12 text-center">
-                    <label>Imagen</label><br />
-                    <img src="{{nuevoProducto.imagen}}" width="100px" height="100px" /> <br />
-                    <input type="file" id="file" name="file" 
-                           onchange="angular.element(this).scope().readURL()" 
-                           accept=".jpg,.png,.jpeg"
-                           ng-required="true"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-lg-12 col-md-12 text-center">
-                    <button type="button" class="btn btn-success" title="Guardar"
-                            ng-click="guardar()">
-                        <i class="glyphicon glyphicon-floppy-save"></i> Guardar
+<div class="row">
+    <div class="form-group col-lg-6 col-md-6">
+        <table class="resultados table table-striped">
+            <tr>
+                <th>Codigo</th>
+                <th>Descripcion</th>
+                <th>Disponibles</th>
+                <th>Valor</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="row in lista">
+                <td>{{row.id}}</td>
+                <td>{{row.descripcion}}</td>
+                <td>{{row.stock}}</td>
+                <td>{{row.valor| currency}}</td>
+                <td>
+                    <button type="button" class="btn btn-info" title="Editar"
+                            ng-click="editarProducto(row)">
+                        <i class="glyphicon glyphicon-edit"></i> 
                     </button>
-                </div>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+    <div class="form-group col-lg-6 col-md-6">
+        <div class="row">
+            <div class="form-group col-lg-6 col-md-6">
+                <label>Cantidad</label>
+                <input class="form-control" type="number" ng-model="nuevoProducto.stock" /> 
+            </div>
+            <div class="form-group col-lg-6 col-md-6">
+                <label>Valor</label>
+                <input class="form-control" type="number" ng-model="nuevoProducto.valor" /> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-12 col-md-12">
+                <label>Descripción</label>
+                <input class="form-control" type="text" ng-model="nuevoProducto.descripcion" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-12 col-md-12 text-center">
+                <label>Imagen</label><br />
+                <span ng-show="nuevoProducto.imagen">
+                    <img src="{{nuevoProducto.imagen}}" width="100px" height="100px" /> <br />
+                </span>
+                <input type="file" id="file" name="file" 
+                       onchange="angular.element(this).scope().readURL()" 
+                       accept=".jpg,.png,.jpeg"
+                       ng-required="true"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-12 col-md-12 text-center">
+                <button type="button" class="btn btn-warning" title="Limpiar"
+                        ng-click="limpiar()">
+                    <i class="glyphicon glyphicon-erase"></i> Limpiar
+                </button>
+                <button type="button" class="btn btn-success" title="Guardar"
+                        ng-click="guardar()">
+                    <i class="glyphicon glyphicon-floppy-save"></i> Guardar
+                </button>
             </div>
         </div>
     </div>
+</div>
 

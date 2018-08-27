@@ -1,8 +1,15 @@
 package co.com.johan.hulkstore.logica;
 
+import co.com.johan.hulkstore.dto.ProductoDTO;
 import co.com.johan.hulkstore.persistencia.entity.Venta;
 import co.com.johan.hulkstore.persistencia.VentaDAO;
 import co.com.johan.hulkstore.dto.VentaDTO;
+import co.com.johan.hulkstore.persistencia.DetalleVentaDAO;
+import co.com.johan.hulkstore.persistencia.ProductoDAO;
+import co.com.johan.hulkstore.persistencia.ValidacionProductoDAO;
+import co.com.johan.hulkstore.persistencia.entity.DetalleVenta;
+import co.com.johan.hulkstore.persistencia.entity.Producto;
+import co.com.johan.hulkstore.servicio.ApplicationException;
 import java.util.List;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -16,12 +23,20 @@ import java.time.format.DateTimeFormatter;
  */
 @Stateless
 public class VentaLogica {
-
+    
     @EJB
     private VentaDAO persistencia;
-
+    
+    @EJB
+    private ValidacionProductoDAO validacionProductoDAO;
+    
+    @EJB
+    private ProductoDAO productoDAO;
+    
+    @EJB
+    private DetalleVentaDAO detalleVentaDAO;
+    
     private final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private final DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     /**
      * Retorna una lista con los Venta que se encuentran en la base de datos
@@ -52,7 +67,33 @@ public class VentaLogica {
      *
      */
     public VentaDTO guardar(VentaDTO dto) {
-        return convertirEntidad(persistencia.guardar(convertirDTO(dto)));
+        List<DetalleVenta> detalles = new ArrayList<>();
+        if (dto.getDetalleVenta() != null && !dto.getDetalleVenta().isEmpty()) {
+            for (ProductoDTO productoDTO : dto.getDetalleVenta()) {
+                Producto producto = validacionProductoDAO.validarCantidad(productoDTO.getId(),
+                        productoDTO.getCantidad());
+                if (producto != null) {
+                    producto.setStock(producto.getStock() - productoDTO.getCantidad());
+                    productoDAO.actualizar(producto);
+                } else {
+                    throw new ApplicationException("El producto " + productoDTO.getDescripcion()
+                            + " no tiene suficiente cantidad para la venta");
+                }
+                DetalleVenta detalle = new DetalleVenta();
+                detalle.setCantidad(productoDTO.getCantidad());
+                detalle.setProducto(producto);
+                detalles.add(detalle);
+            }
+        } else {
+            throw new ApplicationException("Debe Seleccionar almenos un producto para realizar la compra");
+        }
+        
+        VentaDTO venta = convertirEntidad(persistencia.guardar(convertirDTO(dto)));
+        for (DetalleVenta detalle : detalles) {
+            detalle.setVenta(new Venta(venta.getId()));
+            detalleVentaDAO.guardar(detalle);
+        }
+        return venta;
     }
 
     /**
@@ -92,6 +133,8 @@ public class VentaLogica {
         entidad.setValorTotal(dto.getValorTotal());
         if (dto.getFechaVenta() != null) {
             entidad.setFechaVenta(LocalDate.parse(dto.getFechaVenta(), formatoFecha));
+        } else {
+            entidad.setFechaVenta(LocalDate.now());
         }
         return entidad;
     }
@@ -123,9 +166,8 @@ public class VentaLogica {
         dto.setId(entidad.getId());
         dto.setCliente(entidad.getCliente());
         dto.setValorTotal(entidad.getValorTotal());
-
         if (entidad.getFechaVenta() != null) {
-            dto.setFechaVenta(formatoFechaHora.format(entidad.getFechaVenta()));
+            dto.setFechaVenta(formatoFecha.format(entidad.getFechaVenta()));
         }
         return dto;
     }
@@ -144,5 +186,5 @@ public class VentaLogica {
         }
         return dtos;
     }
-
+    
 }

@@ -20,6 +20,7 @@ public class ApplicationConfig extends Application {
     
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(co.com.johan.hulkstore.servicio.ProductoServicio.class);
+        resources.add(co.com.johan.hulkstore.servicio.VentaServicio.class);
     }
     
 }

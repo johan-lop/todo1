@@ -1,6 +1,7 @@
 package co.com.johan.hulkstore.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
 
 /**
  *
@@ -24,6 +25,8 @@ public class VentaDTO {
     private Double valorTotal;
 
     private String cliente;
+    
+    private List<ProductoDTO> detalleVenta;
 
     public Long getId() {
         return id;
@@ -55,6 +58,14 @@ public class VentaDTO {
 
     public void setCliente(String cliente) {
         this.cliente = cliente;
+    }
+
+    public List<ProductoDTO> getDetalleVenta() {
+        return detalleVenta;
+    }
+
+    public void setDetalleVenta(List<ProductoDTO> detalleVenta) {
+        this.detalleVenta = detalleVenta;
     }
     
 }

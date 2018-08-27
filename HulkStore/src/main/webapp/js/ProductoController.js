@@ -18,6 +18,7 @@ module.controller('ProductoCtrl', ['$scope', '$filter', '$http', function ($scop
 
         $scope.editarProducto = function (producto) {
             $scope.nuevoProducto = producto;
+
         };
 
         $scope.readURL = function () {
@@ -46,6 +47,18 @@ module.controller('ProductoCtrl', ['$scope', '$filter', '$http', function ($scop
             }
         };
 
-
+        $scope.guardar = function () {
+            $http.post('./webresources/Producto', JSON.stringify($scope.nuevoProducto), {})
+                    .success(function (data, status, headers, config) {
+                        $scope.nuevoProducto = {};
+                        $scope.listarProductos();
+                    }).error(function (data, status, headers, config) {
+                alert('Error al consultar la informaci\xf3n, por favor intente m\xe1s tarde');
+            });
+        };
+        
+        $scope.limpiar = function() {
+            $scope.nuevoProducto = {};
+        };
 
     }]);

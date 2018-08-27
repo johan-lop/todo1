@@ -6,6 +6,7 @@ var module = angular.module('adminAplicacion', [
 ]);
 module.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'partials/index.html'});
+        $routeProvider.when('/Venta', {templateUrl: 'partials/Venta.html', controller: 'VentaCtrl'});
         $routeProvider.when('/Producto', {templateUrl: 'partials/Producto.html', controller: 'ProductoCtrl'});
         $routeProvider.otherwise({redirectTo: '/'});
     }]);

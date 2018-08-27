@@ -85,6 +85,7 @@ public class ProductoLogica {
         entidad.setDescripcion(dto.getDescripcion());
         entidad.setImagen(dto.getImagen());
         entidad.setStock(dto.getStock());
+        entidad.setValor(dto.getValor());
         return entidad;
     }
 
@@ -116,6 +117,7 @@ public class ProductoLogica {
         dto.setDescripcion(entidad.getDescripcion());
         dto.setImagen(entidad.getImagen());
         dto.setStock(entidad.getStock());
+        dto.setValor(entidad.getValor());
         return dto;
     }
 

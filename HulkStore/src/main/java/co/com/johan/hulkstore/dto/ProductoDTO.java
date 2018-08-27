@@ -23,6 +23,10 @@ public class ProductoDTO {
     private String imagen;
 
     private Integer stock;
+    
+    private Double valor;
+    
+    private Integer cantidad;
 
     public Long getId() {
         return id;
@@ -55,7 +59,23 @@ public class ProductoDTO {
     public void setStock(Integer stock) {
         this.stock = stock;
     }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
     
     
-	
+    	
 }

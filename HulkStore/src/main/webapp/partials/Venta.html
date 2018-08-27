@@ -7,6 +7,7 @@
                     <th>Imagen</th>
                     <th>Descripcion</th>
                     <th>Disponibles</th>
+                    <th>Valor</th>
                     <th></th>
                 </tr>
                 <tr ng-repeat="row in lista">
@@ -16,8 +17,10 @@
                     </td>
                     <td>{{row.descripcion}}</td>
                     <td>{{row.stock}}</td>
+                    <td>{{row.valor| currency}}</td>
                     <td>
-                        <button type="button" class="btn btn-info" title="Agregar al Carrito"
+                        <button ng-show="row.stock > 0"
+                            type="button" class="btn btn-info" title="Agregar al Carrito"
                                 ng-click="agregarProducto(row)">
                             <i class="glyphicon glyphicon-shopping-cart"></i> 
                         </button>
@@ -33,12 +36,17 @@
                     <tr>
                         <th>Descripcion</th>
                         <th>Cantidad</th>
+                        <th>Total</th>
                         <th></th>
                     </tr>
                     <tr ng-repeat="row in carrito">
                         <td>{{row.descripcion}}</td>
                         <td>
-                            <input class="form-control" type="text"  ng-model="row.cantidad"/>
+                            <input class="form-control" type="number" ng-change="calculaTotal()"  
+                                   ng-model="row.cantidad"/>
+                        </td>
+                        <td>
+                            {{row.valor * row.cantidad | currency }}
                         </td>
                         <td>
                             <button type="button" class="btn btn-info" title="Borrar"
@@ -47,9 +55,15 @@
                             </button>
                         </td>
                     </tr>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-right"><b>Total: </b></td>
+                            <td>{{valorTotal | currency}}</td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
-            <div class="row">
+            <div class="row" ng-show="carrito.length">
                 <div class="form-group col-lg-12 col-md-12">
                     <button type="button" class="btn btn-success" title="Comprar"
                             ng-click="comprar()">

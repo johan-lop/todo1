@@ -10,9 +10,16 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Producto")//, schema="${schema}")
 @NamedQueries({
-    @NamedQuery(name = "Producto.obtenerTodos", query = "select e from Producto e")
+    @NamedQuery(name = "Producto.obtenerTodos", query = "select e from Producto e ORDER by e.id")
 })
 public class Producto implements Serializable {
+
+    public Producto() {
+    }
+
+    public Producto(Long id) {
+        this.id = id;
+    }
 
     /**
      * Identificador de la tabla Producto.
@@ -30,6 +37,9 @@ public class Producto implements Serializable {
 
     @Column(name = "STOK")
     private Integer stock;
+    
+    @Column(name = "VALOR")
+    private Double valor;
 
     public Long getId() {
         return this.id;
@@ -62,4 +72,14 @@ public class Producto implements Serializable {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+   
 }

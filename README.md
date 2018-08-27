@@ -1,4 +1,4 @@
-# Manual Instalacion
+# Notas Instalacion
 # Enlace Prueba http://34.237.186.193/HulkStore/#/
 
 1. Ejecutar el archico script.sql para crear la base de datos en postgres
